@@ -3,9 +3,11 @@ import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
-import { services } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
+import { useLanguage } from "../contexts/LanguageContext";
+import { translations } from "../utils/translations";
+import { web, mobile, backend, creator } from "../assets";
 
 const ServiceCard = ({ index, title, icon }) => (
   <Tilt className='xs:w-[250px] w-full'>
@@ -23,7 +25,7 @@ const ServiceCard = ({ index, title, icon }) => (
       >
         <img
           src={icon}
-          alt='development'
+          alt='web-development'
           className='w-16 h-16 object-contain'
         />
 
@@ -36,25 +38,40 @@ const ServiceCard = ({ index, title, icon }) => (
 );
 
 const About = () => {
+  const { currentLanguage } = useLanguage();
+  const t = translations[currentLanguage];
+
+  const services = [
+    {
+      title: t.services[0],
+      icon: web,
+    },
+    {
+      title: t.services[1],
+      icon: mobile,
+    },
+    {
+      title: t.services[2],
+      icon: backend,
+    },
+    {
+      title: t.services[3],
+      icon: creator,
+    },
+  ];
+
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={styles.sectionSubText}>Introduction</p>
-        <h2 className={styles.sectionHeadText}>Overview.</h2>
+        <p className={styles.sectionSubText}>{t.about.introduction}</p>
+        <h2 className={styles.sectionHeadText}>{t.about.overview}</h2>
       </motion.div>
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
         className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
       >
-      I'm a Unreal Engine and Unity developer with over 2 years of proven experience in commercial game development.
-      I bring deep technical expertise in C++, C#, Blueprints, and advanced gameplay programming.
-      As a key contributor to "Underground Garage" (published on Steam), I've demonstrated my ability to deliver
-      production-quality features while maintaining clean, scalable code architecture. My approach emphasizes
-      collaborative development with cross-functional teams, ensuring seamless integration between gameplay mechanics,
-      UI systems, and audio design. I'm committed to pushing the boundaries of interactive entertainment through
-      innovative solutions and maintain active involvement in personal projects that explore emerging gameplay concepts
-      and cutting-edge technologies.
+        {t.about.description}
       </motion.p>
 
       <div className='mt-20 flex flex-wrap gap-10'>

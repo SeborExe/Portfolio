@@ -3,10 +3,12 @@ import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
-import { github } from "../assets";
+import { github, steam } from "../assets";
 import { SectionWrapper } from "../hoc";
-import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
+import { useLanguage } from "../contexts/LanguageContext";
+import { translations } from "../utils/translations";
+import { carrent, jobit, tripguide } from "../assets";
 
 const ProjectCard = ({
   index,
@@ -15,7 +17,7 @@ const ProjectCard = ({
   tags,
   image,
   source_code_link,
-  icon, // Dodany parametr dla custom ikony
+  icon
 }) => {
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
@@ -40,7 +42,7 @@ const ProjectCard = ({
               className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
             >
               <img
-                src={icon || github} // Użyj custom ikony jeśli dostępna, w przeciwnym razie GitHub
+                src={icon || github}
                 alt='source code'
                 className='w-1/2 h-1/2 object-contain'
               />
@@ -69,11 +71,80 @@ const ProjectCard = ({
 };
 
 const Works = () => {
+  const { currentLanguage } = useLanguage();
+  const t = translations[currentLanguage];
+
+  const projects = [
+    {
+      name: t.works.projects.underground.name,
+      description: t.works.projects.underground.description,
+      tags: [
+        {
+          name: "unrealengine",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "blueprints",
+          color: "green-text-gradient",
+        },
+        {
+          name: "wwise",
+          color: "pink-text-gradient",
+        },
+      ],
+      image: carrent,
+      source_code_link: "https://store.steampowered.com/app/1452250/Underground_Garage/",
+      icon: steam
+    },
+    {
+      name: t.works.projects.gunner.name,
+      description: t.works.projects.gunner.description,
+      tags: [
+        {
+          name: "unity",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "csharp",
+          color: "green-text-gradient",
+        },
+        {
+          name: "2d",
+          color: "pink-text-gradient",
+        },
+      ],
+      image: jobit,
+      source_code_link: "https://github.com/SeborExe/Gunner",
+      icon: github
+    },
+    {
+      name: t.works.projects.diabolo.name,
+      description: t.works.projects.diabolo.description,
+      tags: [
+        {
+          name: "unity",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "csharp",
+          color: "green-text-gradient",
+        },
+        {
+          name: "3d",
+          color: "pink-text-gradient",
+        },
+      ],
+      image: tripguide,
+      source_code_link: "https://github.com/SeborExe/Diabolo",
+      icon: github
+    },
+  ];
+
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={`${styles.sectionSubText} `}>My work</p>
-        <h2 className={`${styles.sectionHeadText}`}>Projects.</h2>
+        <p className={`${styles.sectionSubText} `}>{t.works.subtitle}</p>
+        <h2 className={`${styles.sectionHeadText}`}>{t.works.title}</h2>
       </motion.div>
 
       <div className='w-full flex'>
@@ -81,11 +152,7 @@ const Works = () => {
           variants={fadeIn("", "", 0.1, 1)}
           className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'
         >
-          Following projects showcases my skills and experience through
-          real-world examples of my work. Each project is briefly described with
-          links to code repositories or steam page in it. It reflects my
-          ability to solve complex problems, work with different technologies,
-          and manage projects effectively.
+          {t.works.description}
         </motion.p>
       </div>
 
@@ -94,7 +161,6 @@ const Works = () => {
           <ProjectCard 
             key={`project-${index}`} 
             index={index} 
-            icon={project.icon} // Przekazanie custom ikony
             {...project} 
           />
         ))}

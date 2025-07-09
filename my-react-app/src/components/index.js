@@ -7,7 +7,7 @@ import Experience from "./Experience";
 import Works from "./Works";
 import Contact from "./Contact";
 import CanvasLoader from "./Loader";
-
+import LanguageSelector from "./LanguageSelector";
 
 export {
   Hero,
@@ -18,6 +18,7 @@ export {
   Works,
   Contact,
   CanvasLoader,
+  LanguageSelector,
   EarthCanvas, 
   BallCanvas, 
   ComputersCanvas, 
